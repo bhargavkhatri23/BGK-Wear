@@ -23,8 +23,9 @@ jobs:
           npm install @capacitor/core @capacitor/cli @capacitor/android --force
           npx cap init BjyWear com.bjywear.app --web-dir . || true
           
-          # AAPT2 एरर से बचने के लिए करप्ट/अमान्य डिफ़ॉल्ट आइकॉन फ़ाइलों को साफ़ करें
+          # AAPT2 एरर से बचने के लिए अमान्य mipmap और drawable रिसोर्स फ़ाइलों को डिलीट करें
           rm -rf android/app/src/main/res/mipmap-*
+          rm -rf android/app/src/main/res/drawable*
           
           npx cap add android || true
           npx cap sync android
