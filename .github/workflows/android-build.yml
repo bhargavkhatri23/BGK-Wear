@@ -29,11 +29,11 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Build Android App Bundle (AAB)
+      - name: Build Android App Bundle (AAB) with Stacktrace
         run: |
           cd android
           chmod +x gradlew
-          ./gradlew bundleRelease
+          ./gradlew bundleRelease --stacktrace
 
       - name: Upload AAB Artifact
         uses: actions/upload-artifact@v4
