@@ -17,24 +17,26 @@ jobs:
         with:
           node-version: 22
 
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
       - name: Install Dependencies & Sync Capacitor
         run: |
           npm install --force
           npm install @capacitor/core @capacitor/cli @capacitor/android --force
-          npx cap init BjyWear com.bjywear.app --web-dir . || true
-          
-          # AAPT2 एरर से बचने के लिए अमान्य mipmap और drawable रिसोर्स फ़ाइलों को डिलीट करें
-          rm -rf android/app/src/main/res/mipmap-*
-          rm -rf android/app/src/main/res/drawable*
+          npx cap init BjyWear com.bgkwear.app --web-dir . || true
           
           npx cap add android || true
           npx cap sync android
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '17'
+          # splash.png संदर्भ गायब होने की स्थिति में डिफ़ॉल्ट dummy drawable फ़ाइल बनाएँ
+          mkdir -p android/app/src/main/res/drawable
+          if [ ! -f android/app/src/main/res/drawable/splash.png ]; then
+            echo '<shape xmlns:android="http://schemas.android.com/apk/res/android"><solid android:color="#FFFFFF"/></shape>' > android/app/src/main/res/drawable/splash.xml
+          fi
 
       - name: Build Android App Bundle
         run: |
