@@ -18,8 +18,8 @@ jobs:
 
       - name: Install Dependencies & Capacitor
         run: |
-          npm install
-          npm install @capacitor/core @capacitor/cli @capacitor/android
+          npm install --legacy-peer-deps
+          npm install @capacitor/core @capacitor/cli @capacitor/android --legacy-peer-deps
           npx cap init BjyWear com.bjywear.app --web-dir . || true
           npx cap add android || true
 
