@@ -32,21 +32,16 @@ jobs:
           npx cap add android || true
           npx cap sync android
 
-          # Clean corrupted mipmap and drawable files
+          # 1. Clean bad images causing AAPT errors
           rm -rf android/app/src/main/res/mipmap-*
           rm -rf android/app/src/main/res/drawable*
 
-          # Create minimal valid resources for Android manifest
           mkdir -p android/app/src/main/res/drawable
           mkdir -p android/app/src/main/res/mipmap-anydpi-v26
 
-          # Dummy Splash Screen XML
           echo '<shape xmlns:android="http://schemas.android.com/apk/res/android"><solid android:color="#FFFFFF"/></shape>' > android/app/src/main/res/drawable/splash.xml
-
-          # Dummy Launcher Icon XML
           echo '<shape xmlns:android="http://schemas.android.com/apk/res/android"><solid android:color="#3880FF"/></shape>' > android/app/src/main/res/drawable/ic_launcher_background.xml
           
-          # Adaptive Icon Config XMLs
           cat << 'EOF' > android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
           <?xml version="1.0" encoding="utf-8"?>
           <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
@@ -63,7 +58,7 @@ jobs:
           </adaptive-icon>
           EOF
 
-          # Clean up invalid imports and manual registerPlugin from MainActivity.java
+          # 2. Fix MainActivity.java
           cat << 'EOF' > android/app/src/main/java/com/bgkwear/app/MainActivity.java
           package com.bgkwear.app;
 
@@ -71,6 +66,10 @@ jobs:
 
           public class MainActivity extends BridgeActivity {}
           EOF
+
+          # 3. Remove SigningConfig from build.gradle (Fix Keystore Error)
+          sed -i '/signingConfigs {/,/}/d' android/app/build.gradle
+          sed -i '/signingConfig signingConfigs./d' android/app/build.gradle
 
       - name: Build Android App Bundle
         run: |
@@ -85,4 +84,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: app-release-bundle
-          path: android/app/build/outputs/bundle/release/app-release.aab
+          path: android/app/build/outputs/bundle/release/
