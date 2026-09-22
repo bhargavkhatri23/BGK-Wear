@@ -35,6 +35,7 @@ jobs:
       - name: Build Android App Bundle (AAB)
         run: |
           cd android
+          chmod +x gradlew
           ./gradlew bundleRelease --stacktrace
 
       - name: Upload AAB Artifact
@@ -42,3 +43,4 @@ jobs:
         with:
           name: app-release-bundle
           path: android/app/build/outputs/bundle/release/app-release.aab
+        
