@@ -3,6 +3,7 @@ name: Build Android App Bundle
 on:
   push:
     branches: [ main, master ]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -32,13 +33,14 @@ jobs:
           npx cap add android || true
           npx cap sync android
 
-          # 1. Clean bad images causing AAPT errors
+          # Remove corrupted images/resources
           rm -rf android/app/src/main/res/mipmap-*
           rm -rf android/app/src/main/res/drawable*
 
           mkdir -p android/app/src/main/res/drawable
           mkdir -p android/app/src/main/res/mipmap-anydpi-v26
 
+          # Create basic XML resources
           echo '<shape xmlns:android="http://schemas.android.com/apk/res/android"><solid android:color="#FFFFFF"/></shape>' > android/app/src/main/res/drawable/splash.xml
           echo '<shape xmlns:android="http://schemas.android.com/apk/res/android"><solid android:color="#3880FF"/></shape>' > android/app/src/main/res/drawable/ic_launcher_background.xml
           
@@ -58,7 +60,7 @@ jobs:
           </adaptive-icon>
           EOF
 
-          # 2. Fix MainActivity.java
+          # Ensure valid MainActivity
           cat << 'EOF' > android/app/src/main/java/com/bgkwear/app/MainActivity.java
           package com.bgkwear.app;
 
@@ -67,17 +69,17 @@ jobs:
           public class MainActivity extends BridgeActivity {}
           EOF
 
-          # 3. Remove SigningConfig from build.gradle (Fix Keystore Error)
-          sed -i '/signingConfigs {/,/}/d' android/app/build.gradle
-          sed -i '/signingConfig signingConfigs./d' android/app/build.gradle
-
-      - name: Build Android App Bundle
+      - name: Setup Fresh Gradle Wrapper & Build AAB
         run: |
           cd android
-          rm -rf gradle/wrapper/gradle-wrapper.jar gradle/wrapper/gradle-wrapper.properties
-          wget https://services.gradle.org/distributions/gradle-8.13-bin.zip
-          unzip -q gradle-8.13-bin.zip
-          export PATH=$PWD/gradle-8.13/bin:$PATH
+          
+          # Fresh gradle setup
+          mkdir -p gradle/wrapper
+          wget https://services.gradle.org/distributions/gradle-8.11.1-bin.zip
+          unzip -q gradle-8.11.1-bin.zip
+          export PATH=$PWD/gradle-8.11.1/bin:$PATH
+          
+          # Build Release AAB Bundle
           gradle bundleRelease --stacktrace
 
       - name: Upload AAB Artifact
