@@ -1,4 +1,4 @@
-name: Build Android App Bundle
+name: Build Android App Bundle & APK
 
 on:
   push:
@@ -69,7 +69,7 @@ jobs:
           public class MainActivity extends BridgeActivity {}
           EOF
 
-      - name: Setup Fresh Gradle Wrapper & Build Unsigned AAB
+      - name: Setup Fresh Gradle Wrapper & Build APK & AAB
         run: |
           cd android
           
@@ -79,11 +79,17 @@ jobs:
           unzip -q gradle-8.13-bin.zip
           export PATH=$PWD/gradle-8.13/bin:$PATH
 
-          # Temporarily remove signingConfig from build.gradle to force clean unsigned build
+          # Remove signingConfig requirement
           sed -i '/signingConfig signingConfigs.release/d' app/build.gradle || true
 
-          # Build AAB Bundle without signing requirement
-          gradle bundleRelease --stacktrace
+          # Build APK and AAB
+          gradle assembleRelease bundleRelease --stacktrace
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-apk
+          path: android/app/build/outputs/apk/release/
 
       - name: Upload AAB Artifact
         uses: actions/upload-artifact@v4
