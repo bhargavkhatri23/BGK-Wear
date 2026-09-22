@@ -69,7 +69,7 @@ jobs:
           public class MainActivity extends BridgeActivity {}
           EOF
 
-      - name: Setup Fresh Gradle Wrapper & Build AAB
+      - name: Setup Fresh Gradle Wrapper & Build Unsigned AAB
         run: |
           cd android
           
@@ -78,14 +78,11 @@ jobs:
           wget https://services.gradle.org/distributions/gradle-8.13-bin.zip
           unzip -q gradle-8.13-bin.zip
           export PATH=$PWD/gradle-8.13/bin:$PATH
-          
-          # Remove existing corrupted keystore if present
-          rm -f app/bgk-release-key.jks
 
-          # Create fresh JKS keystore explicitly using PKCS12 format
-          keytool -genkeypair -v -keystore app/bgk-release-key.jks -storetype PKCS12 -alias bgkwear -keyalg RSA -keysize 2048 -validity 10000 -storepass android -keypass android -dname "CN=Android, OU=Android, O=Android, L=Android, ST=Android, C=US"
+          # Temporarily remove signingConfig from build.gradle to force clean unsigned build
+          sed -i '/signingConfig signingConfigs.release/d' app/build.gradle || true
 
-          # Build AAB Bundle
+          # Build AAB Bundle without signing requirement
           gradle bundleRelease --stacktrace
 
       - name: Upload AAB Artifact
