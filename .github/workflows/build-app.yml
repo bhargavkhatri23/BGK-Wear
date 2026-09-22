@@ -33,7 +33,7 @@ jobs:
           npx cap add android || true
           npx cap sync android
 
-          # Remove corrupted images/resources
+          # Clean resources
           rm -rf android/app/src/main/res/mipmap-*
           rm -rf android/app/src/main/res/drawable*
 
@@ -79,11 +79,11 @@ jobs:
           unzip -q gradle-8.13-bin.zip
           export PATH=$PWD/gradle-8.13/bin:$PATH
           
-          # Remove bad keystore if present to prevent signing errors
-          rm -f app/bgk-release-key.jks
+          # Create temporary keystore file to satisfy Gradle requirement
+          keytool -genkey -v -keystore app/bgk-release-key.jks -alias bgkwear -keyalg RSA -keysize 2048 -validity 10000 -storepass android -keypass android -dname "CN=Android, OU=Android, O=Android, L=Android, ST=Android, C=US"
 
-          # Build AAB
-          gradle bundleRelease -x validateSigningRelease --stacktrace
+          # Build AAB Bundle
+          gradle bundleRelease --stacktrace
 
       - name: Upload AAB Artifact
         uses: actions/upload-artifact@v4
