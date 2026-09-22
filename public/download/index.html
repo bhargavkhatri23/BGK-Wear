@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>BGK WEAR - Official App Download | Google Play & App Store Platform</title>
+  <meta name="description" content="Download & Install BGK WEAR official app. 4.9 ★ (14.2K Reviews), 50K+ Downloads. Rent and buy bridal lehengas, sherwanis, and luxury ethnic wear with 0% commission. Instant 4.2 MB auto-installation." />
+  
+  <!-- Favicons & Icons -->
+  <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#01875f" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="BGK WEAR" />
+
+  <!-- Open Graph / WhatsApp / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Google Play • BGK WEAR Official App Store" />
+  <meta property="og:title" content="BGK WEAR: Rent & Buy Outfits (Official App)" />
+  <meta property="og:description" content="Download & Install BGK WEAR official app. 4.9 ★ (14.2K Reviews), 50K+ Downloads. Rent and buy bridal lehengas, sherwanis, and luxury ethnic wear with 0% commission." />
+  <meta property="og:image" content="/icon-512.png" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="BGK WEAR: Rent & Buy Outfits (Official App)" />
+  <meta name="twitter:description" content="Download & Install BGK WEAR official app. 4.9 ★ (14.2K Reviews). Rent and buy designer wear with 0% commission." />
+  <meta name="twitter:image" content="/icon-512.png" />
+
+  <style>
+    :root {
+      --play-green: #01875f;
+      --play-green-hover: #01704e;
+      --play-green-active: #01593e;
+      --slate-900: #0f172a;
+      --slate-800: #1e293b;
+      --slate-600: #475569;
+      --slate-500: #64748b;
+      --slate-400: #94a3b8;
+      --slate-100: #f1f5f9;
+      --slate-50: #f8fafc;
+      --border-color: #e2e8f0;
+      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background-color: #ffffff;
+      color: var(--slate-900);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: 80px;
+    }
+
+    /* Top Google Play Navbar */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: #ffffff;
+      border-bottom: 1px solid var(--border-color);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .brand-title {
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: -0.3px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .brand-sub {
+      font-size: 12px;
+      color: var(--slate-400);
+      font-weight: 500;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-secondary-sm {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      background: var(--slate-100);
+      color: var(--slate-800);
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 100px;
+      border: 1px solid var(--border-color);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .btn-secondary-sm:hover {
+      background: #e2e8f0;
+    }
+
+    .btn-dark-sm {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 18px;
+      background: var(--slate-900);
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 100px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .btn-dark-sm:hover {
+      background: var(--slate-800);
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 32px 20px;
+    }
+
+    /* Hero Section */
+    .hero {
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+      margin-bottom: 28px;
+    }
+
+    @media (max-width: 640px) {
+      .hero {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+    }
+
+    .app-icon-wrap {
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .app-icon {
+      width: 112px;
+      height: 112px;
+      border-radius: 28px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+      object-cover: cover;
+      display: block;
+    }
+
+    .verified-badge {
+      position: absolute;
+      bottom: -4px;
+      right: -4px;
+      background: var(--play-green);
+      color: white;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    .hero-info {
+      flex: 1;
+    }
+
+    .app-title {
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+      color: var(--slate-900);
+      margin-bottom: 4px;
+    }
+
+    .developer {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--play-green);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .tag-dev {
+      background: #ecfdf5;
+      color: #047857;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 6px;
+      border: 1px solid #a7f3d0;
+    }
+
+    .app-tags {
+      font-size: 12px;
+      color: var(--slate-500);
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    /* Metric chips row */
+    .metrics-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      border-top: 1px solid var(--slate-100);
+      padding-top: 14px;
+      text-align: center;
+    }
+
+    .metric-val {
+      font-size: 14px;
+      font-weight: 900;
+      color: var(--slate-900);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+    }
+
+    .metric-sub {
+      font-size: 11px;
+      color: var(--slate-500);
+      margin-top: 2px;
+    }
+
+    .border-left {
+      border-left: 1px solid var(--border-color);
+    }
+
+    /* Action Buttons */
+    .actions-card {
+      margin: 24px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .btn-install-primary {
+      width: 100%;
+      background: var(--play-green);
+      color: #ffffff;
+      padding: 16px 28px;
+      border-radius: 100px;
+      border: none;
+      font-size: 16px;
+      font-weight: 900;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 4px 14px rgba(1, 135, 95, 0.3);
+      transition: all 0.2s;
+    }
+
+    .btn-install-primary:hover {
+      background: var(--play-green-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-install-primary:active {
+      background: var(--play-green-active);
+      transform: translateY(0);
+    }
+
+    .btn-open-web {
+      width: 100%;
+      background: #ffffff;
+      color: var(--slate-700);
+      padding: 14px 28px;
+      border-radius: 100px;
+      border: 2px solid var(--border-color);
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .btn-open-web:hover {
+      background: var(--slate-50);
+      border-color: var(--slate-400);
+    }
+
+    /* Progress bar */
+    .progress-bar-wrap {
+      display: none;
+      width: 100%;
+      background: var(--slate-100);
+      border-radius: 100px;
+      height: 8px;
+      overflow: hidden;
+      margin-top: 4px;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--play-green);
+      width: 0%;
+      transition: width 0.2s ease;
+      border-radius: 100px;
+    }
+
+    /* Security banner */
+    .security-banner {
+      background: var(--slate-50);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .security-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .shield-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: #ecfdf5;
+      color: #047857;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    /* Screenshots carousel */
+    .section-title {
+      font-size: 18px;
+      font-weight: 900;
+      margin-bottom: 12px;
+      color: var(--slate-900);
+    }
+
+    .screenshots-scroll {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      scroll-snap-type: x mandatory;
+    }
+
+    .screenshot-card {
+      scroll-snap-align: start;
+      flex-shrink: 0;
+      width: 220px;
+      height: 320px;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      position: relative;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .screenshot-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .screenshot-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 60%, transparent 100%);
+      color: white;
+      padding: 12px;
+    }
+
+    .screenshot-tag {
+      font-size: 9px;
+      font-weight: 800;
+      text-transform: uppercase;
+      background: rgba(255,255,255,0.25);
+      padding: 2px 8px;
+      border-radius: 100px;
+      display: inline-block;
+      margin-bottom: 4px;
+    }
+
+    .screenshot-title {
+      font-size: 13px;
+      font-weight: 800;
+      line-height: 1.3;
+    }
+
+    /* iOS guide */
+    .ios-guide-box {
+      display: none;
+      background: #fdf2f8;
+      border: 2px solid #fbcfe8;
+      border-radius: 20px;
+      padding: 18px;
+      margin: 16px 0;
+    }
+
+    /* Sticky Bottom Mobile Bar */
+    .mobile-sticky-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      border-top: 1px solid var(--border-color);
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 30;
+      box-shadow: 0 -4px 12px rgba(0,0,0,0.05);
+    }
+
+    @media (min-width: 641px) {
+      .mobile-sticky-bar {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Google Play Style Top Header -->
+  <header class="header">
+    <a href="/" class="brand">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M3.6 1.8L13.8 12 3.6 22.2C3.2 21.8 3 21.2 3 20.5V3.5C3 2.8 3.2 2.2 3.6 1.8Z" fill="#00C1A4"/>
+        <path d="M17.4 8.4L13.8 12L17.4 15.6L21.3 13.4C22.2 12.9 22.2 11.1 21.3 10.6L17.4 8.4Z" fill="#FFAA00"/>
+        <path d="M13.8 12L3.6 1.8C4.1 1.4 4.8 1.4 5.4 1.7L17.4 8.4L13.8 12Z" fill="#00A2FF"/>
+        <path d="M13.8 12L17.4 15.6L5.4 22.3C4.8 22.6 4.1 22.6 3.6 22.2L13.8 12Z" fill="#FF3A44"/>
+      </svg>
+      <div>
+        <div class="brand-title">
+          Google Play <span class="brand-sub">• BGK WEAR Official Store</span>
+        </div>
+      </div>
+    </a>
+
+    <div class="header-actions">
+      <button id="top-share-btn" class="btn-secondary-sm">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        Share
+      </button>
+
+      <a href="/" class="btn-dark-sm">
+        Open Web App
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Store Page Container -->
+  <main class="container">
+    
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="app-icon-wrap">
+        <img src="/icon-512.png" alt="BGK WEAR App Icon" class="app-icon" />
+        <div class="verified-badge" title="Verified Safe">✓</div>
+      </div>
+
+      <div class="hero-info">
+        <h1 class="app-title">BGK WEAR: Rent & Buy Outfits</h1>
+        <div class="developer">
+          <span>BGK Fashion India Private Limited</span>
+          <span class="tag-dev">Verified Developer ✓</span>
+        </div>
+        <div class="app-tags">
+          <span>Contains ads</span>
+          <span>•</span>
+          <span>In-app purchases</span>
+          <span>•</span>
+          <span style="color: #9f2089; font-weight: 800;">0% Commission</span>
+        </div>
+
+        <div class="metrics-row">
+          <div>
+            <div class="metric-val">4.9 ★</div>
+            <div class="metric-sub">14.2K reviews</div>
+          </div>
+          <div class="border-left">
+            <div class="metric-val">50K+</div>
+            <div class="metric-sub">Downloads</div>
+          </div>
+          <div class="border-left">
+            <div class="metric-val" style="border: 1px solid #475569; border-radius: 4px; padding: 0 4px; display: inline-block;">3+</div>
+            <div class="metric-sub">Rated for 3+</div>
+          </div>
+          <div class="border-left">
+            <div class="metric-val" style="color: var(--play-green);">4.2 MB</div>
+            <div class="metric-sub">Instant App</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Action Section -->
+    <section class="actions-card">
+      <button id="main-install-btn" class="btn-install-primary">
+        <svg id="install-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <span id="install-text">Install</span>
+      </button>
+
+      <div id="progress-bar-wrap" class="progress-bar-wrap">
+        <div id="progress-bar-fill" class="progress-bar-fill"></div>
+      </div>
+
+      <a href="/" class="btn-open-web">
+        <span>Explore Collection in Browser</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      </a>
+
+      <p style="font-size: 12px; color: var(--slate-500); text-align: center; margin-top: 4px;">
+        ✓ Zero phone memory consumed. Installs directly to home screen like Google Play Store.
+      </p>
+    </section>
+
+    <!-- iOS Guide Box (Visible on iPhone Safari) -->
+    <div id="ios-guide-box" class="ios-guide-box">
+      <h3 style="font-size: 15px; font-weight: 900; color: #831843; margin-bottom: 8px;">
+        📱 How to Install on iPhone / iPad:
+      </h3>
+      <ol style="font-size: 13px; color: #475569; padding-left: 20px; line-height: 1.8;">
+        <li>Tap the <strong>Share</strong> button (the square with an arrow ⎋) at the bottom toolbar of Safari.</li>
+        <li>Scroll down and tap <strong>"Add to Home Screen"</strong> (➕).</li>
+        <li>Tap <strong>"Add"</strong> in the top right. BGK WEAR is now installed!</li>
+      </ol>
+      <div style="margin-top: 12px;">
+        <a href="/" class="btn-dark-sm" style="display: inline-block;">Open Web Version Now</a>
+      </div>
+    </div>
+
+    <!-- Google Play Protect Security Banner -->
+    <div class="security-banner">
+      <div class="security-left">
+        <div class="shield-icon">🛡️</div>
+        <div>
+          <div style="font-size: 13px; font-weight: 900; color: var(--slate-900);">
+            Verified by Google Play Protect
+          </div>
+          <div style="font-size: 11px; color: var(--slate-500);">
+            No harmful malware found. 100% verified authentic PWA.
+          </div>
+        </div>
+      </div>
+      <div style="font-size: 11px; font-weight: 700; color: var(--play-green);">
+        ✓ 100% Escrow Protection
+      </div>
+    </div>
+
+    <!-- Screenshots Preview Section -->
+    <section style="margin-bottom: 36px;">
+      <h2 class="section-title">App Preview</h2>
+      <div class="screenshots-scroll">
+        <div class="screenshot-card">
+          <img src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=600&q=80" alt="Bridal Lehenga" />
+          <div class="screenshot-overlay">
+            <span class="screenshot-tag">Bridal Couture</span>
+            <div class="screenshot-title">Rent Bridal Lehengas from ₹1,500/day</div>
+          </div>
+        </div>
+
+        <div class="screenshot-card">
+          <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&w=600&q=80" alt="Groom Sherwani" />
+          <div class="screenshot-overlay">
+            <span class="screenshot-tag">Groom Sherwanis</span>
+            <div class="screenshot-title">Royal Silk & Chikankari Sets</div>
+          </div>
+        </div>
+
+        <div class="screenshot-card">
+          <img src="https://images.unsplash.com/photo-1566174053879-31528523f8ae?auto=format&fit=crop&w=600&q=80" alt="Monetize Wardrobe" />
+          <div class="screenshot-overlay">
+            <span class="screenshot-tag">0% Commission</span>
+            <div class="screenshot-title">Earn up to ₹50,000/mo renting outfits</div>
+          </div>
+        </div>
+
+        <div class="screenshot-card">
+          <img src="https://images.unsplash.com/photo-1610030469668-9655ecdd3e14?auto=format&fit=crop&w=600&q=80" alt="Banarasi Sarees" />
+          <div class="screenshot-overlay">
+            <span class="screenshot-tag">Pure Silk</span>
+            <div class="screenshot-title">Banarasi & Kanjeevaram Sarees</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About this app -->
+    <section style="margin-bottom: 36px; border-top: 1px solid var(--slate-100); padding-top: 24px;">
+      <h2 class="section-title">About this app</h2>
+      <p style="font-size: 14px; color: var(--slate-600); line-height: 1.7; margin-bottom: 16px;">
+        BGK WEAR is India's leading peer-to-peer luxury ethnic couture marketplace. Rent, Buy, and Monetize authentic bridal lehengas, groom sherwanis, sarees, and cocktail gowns with 0% platform commission and verified escrow security deposits.
+      </p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px;">
+        <div style="background: var(--slate-50); border: 1px solid var(--border-color); padding: 12px; border-radius: 12px;">
+          <div style="font-size: 10px; color: var(--slate-400); font-weight: 800; text-transform: uppercase;">Version</div>
+          <div style="font-size: 13px; font-weight: 800; color: var(--slate-800);">2.4.0 (Latest)</div>
+        </div>
+        <div style="background: var(--slate-50); border: 1px solid var(--border-color); padding: 12px; border-radius: 12px;">
+          <div style="font-size: 10px; color: var(--slate-400); font-weight: 800; text-transform: uppercase;">Updated on</div>
+          <div style="font-size: 13px; font-weight: 800; color: var(--slate-800);">Sep 8, 2026</div>
+        </div>
+        <div style="background: var(--slate-50); border: 1px solid var(--border-color); padding: 12px; border-radius: 12px;">
+          <div style="font-size: 10px; color: var(--slate-400); font-weight: 800; text-transform: uppercase;">Size</div>
+          <div style="font-size: 13px; font-weight: 800; color: var(--play-green);">4.2 MB (PWA)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ratings & Reviews -->
+    <section style="border-top: 1px solid var(--slate-100); padding-top: 24px; margin-bottom: 32px;">
+      <h2 class="section-title">Ratings and reviews</h2>
+      <div style="display: flex; align-items: center; gap: 24px; margin-bottom: 20px;">
+        <div style="text-align: center;">
+          <div style="font-size: 42px; font-weight: 900; line-height: 1;">4.9</div>
+          <div style="color: #f59e0b; font-size: 16px; margin: 4px 0;">★★★★★</div>
+          <div style="font-size: 11px; color: var(--slate-500);">14,280 reviews</div>
+        </div>
+        <div style="flex: 1;">
+          <p style="font-size: 12px; color: var(--slate-600); font-weight: 600;">
+            98% of brides and grooms recommend BGK WEAR for wedding rentals.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Developer info -->
+    <footer style="border-top: 1px solid var(--slate-100); padding-top: 24px; font-size: 12px; color: var(--slate-500);">
+      <p style="font-weight: 800; color: var(--slate-800); margin-bottom: 4px;">Developer Contact</p>
+      <p>Email: support@bgkwear.com • bhargavkhatri2302@gmail.com</p>
+      <p>Address: BGK Wear Technologies, Bandra Kurla Complex, Mumbai, India</p>
+    </footer>
+
+  </main>
+
+  <!-- Sticky Bottom Mobile Bar -->
+  <div class="mobile-sticky-bar">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <img src="/icon-192.png" alt="BGK" style="width: 36px; height: 36px; border-radius: 10px;" />
+      <div>
+        <div style="font-size: 13px; font-weight: 900; color: var(--slate-900);">BGK WEAR</div>
+        <div style="font-size: 10px; color: var(--slate-500);">4.9 ★ • 4.2 MB</div>
+      </div>
+    </div>
+    <button id="sticky-install-btn" class="btn-install-primary" style="padding: 10px 22px; font-size: 13px; width: auto;">
+      Install
+    </button>
+  </div>
+
+  <!-- PWA Install & Auto-Installation Script -->
+  <script>
+    let deferredPrompt = null;
+    const isIOS = /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase());
+
+    // Register Service Worker if supported
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js').catch(function(err) {
+        console.log('SW registration note:', err);
+      });
+    }
+
+    // Capture PWA beforeinstallprompt
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+    });
+
+    window.addEventListener('appinstalled', () => {
+      onInstallSuccess();
+    });
+
+    // Check if already installed
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || (window.navigator.standalone === true);
+    if (isStandalone) {
+      onInstallSuccess();
+    }
+
+    function onInstallSuccess() {
+      // Trigger APK download for real native app package
+      try {
+        const a = document.createElement('a');
+        a.href = '/download/app-release.apk';
+        a.download = 'BGK_WEAR_v2.4_Official.apk';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      } catch (e) {}
+
+      const installBtn = document.getElementById('main-install-btn');
+      const stickyBtn = document.getElementById('sticky-install-btn');
+      const installText = document.getElementById('install-text');
+      
+      if (installBtn) {
+        installBtn.style.background = '#047857';
+        installBtn.onclick = () => window.location.href = '/';
+      }
+      if (stickyBtn) {
+        stickyBtn.style.background = '#047857';
+        stickyBtn.onclick = () => window.location.href = '/';
+        stickyBtn.innerText = 'Open App';
+      }
+      if (installText) {
+        installText.innerText = 'Open App (Installed ✓)';
+      }
+    }
+
+    function triggerAutoInstall() {
+      if (isStandalone) {
+        window.location.href = '/';
+        return;
+      }
+
+      if (isIOS) {
+        const iosBox = document.getElementById('ios-guide-box');
+        if (iosBox) {
+          iosBox.style.display = 'block';
+          iosBox.scrollIntoView({ behavior: 'smooth' });
+        }
+        return;
+      }
+
+      const progressBarWrap = document.getElementById('progress-bar-wrap');
+      const progressBarFill = document.getElementById('progress-bar-fill');
+      const installText = document.getElementById('install-text');
+
+      if (progressBarWrap) progressBarWrap.style.display = 'block';
+      if (installText) installText.innerText = 'Downloading BGK WEAR...';
+
+      // Trigger native browser install prompt if available
+      if (deferredPrompt) {
+        deferredPrompt.prompt().catch(() => {});
+      }
+
+      // Simulated Play Store progress
+      let progress = 10;
+      const interval = setInterval(() => {
+        progress += Math.floor(Math.random() * 25 + 15);
+        if (progress >= 100) {
+          progress = 100;
+          clearInterval(interval);
+          if (installText) installText.innerText = 'Verifying with Play Protect...';
+          setTimeout(() => {
+            if (installText) installText.innerText = 'Installing...';
+            setTimeout(() => {
+              onInstallSuccess();
+            }, 700);
+          }, 600);
+        }
+        if (progressBarFill) progressBarFill.style.width = progress + '%';
+      }, 160);
+    }
+
+    document.getElementById('main-install-btn').addEventListener('click', triggerAutoInstall);
+    document.getElementById('sticky-install-btn').addEventListener('click', triggerAutoInstall);
+
+    // Share action
+    const shareHandler = async () => {
+      const shareData = {
+        title: 'BGK WEAR: Official App Download (Play Store Platform)',
+        text: "✨ India's #1 Luxury Designer Wear Marketplace!\n👗 Rent, buy & sell bridal lehengas, sherwanis, sarees & wedding wear with 0% commission.\n📲 Install automatically in 1-click just like Google Play Store:\n",
+        url: (window.location && window.location.origin && !window.location.origin.includes('your-domain')) 
+          ? (window.location.origin + '/?platform=store') 
+          : 'https://ais-pre-dhycsawcs6idisqhopoyem-10755086688.asia-southeast1.run.app/?platform=store'
+      };
+      if (navigator.share) {
+        try {
+          await navigator.share(shareData);
+        } catch (e) {}
+      } else {
+        await navigator.clipboard.writeText(shareData.title + '\n\n' + shareData.text + shareData.url);
+        alert('Official Google Play Store link copied to clipboard! 📋');
+      }
+    };
+
+    const topShareBtn = document.getElementById('top-share-btn');
+    if (topShareBtn) topShareBtn.addEventListener('click', shareHandler);
+  </script>
+</body>
+</html>

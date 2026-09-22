@@ -1,0 +1,4 @@
+- Preparing the list of your Firebase projects
+✖ Preparing the list of your Firebase projects
+
+Error: Failed to list Firebase projects. See firebase-debug.log for more info.

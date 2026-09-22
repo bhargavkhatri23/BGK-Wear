@@ -1,0 +1,314 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --brand-primary: #9f2089;
+    --brand-primary-hover: #80146f;
+    --brand-primary-light: #fdf2f8;
+    --brand-secondary: #c2185b;
+    --brand-bg: #F8FAFC;
+    --brand-card: #FFFFFF;
+    --font-display: 'Space Grotesk', 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+
+  html, body {
+    font-family: var(--font-sans);
+    background-color: #F8FAFC;
+    color: #0f172a;
+    overflow-x: hidden;
+    width: 100%;
+    max-width: 100vw;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Prevent image / media distortion or clipping */
+  img, video, canvas, svg {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+}
+
+/* Fluid Scaling Utilities */
+.fluid-h1 {
+  font-size: clamp(1.5rem, 4vw + 1rem, 3.25rem);
+  line-height: 1.15;
+}
+
+.fluid-h2 {
+  font-size: clamp(1.25rem, 2.5vw + 0.75rem, 2.25rem);
+  line-height: 1.2;
+}
+
+.fluid-body {
+  font-size: clamp(0.875rem, 1vw + 0.5rem, 1rem);
+  line-height: 1.6;
+}
+
+.fluid-padding {
+  padding-left: clamp(1rem, 3vw, 2.5rem);
+  padding-right: clamp(1rem, 3vw, 2.5rem);
+}
+
+.font-display-modern {
+  font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Brand Gradients & Accents (Meesho Vibrant Aesthetic) */
+.bgk-primary-bg {
+  background-color: #9f2089;
+}
+
+.bgk-primary-text {
+  color: #9f2089;
+}
+
+.bgk-gradient-bg {
+  background: linear-gradient(135deg, #9f2089 0%, #c2185b 100%);
+}
+
+.bgk-gradient-text {
+  background: linear-gradient(135deg, #9f2089 0%, #c2185b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.bgk-light-gradient {
+  background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+}
+
+/* Primary Action Button */
+.bgk-button {
+  background: linear-gradient(135deg, #9f2089 0%, #c2185b 100%);
+  color: #FFFFFF;
+  font-weight: 700;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 14px -2px rgba(159, 32, 137, 0.3);
+}
+
+/* Single Line Oscillating Pink LED Light Animation */
+@keyframes led-line-vertical {
+  0% {
+    top: 0%;
+  }
+  50% {
+    top: 100%;
+  }
+  100% {
+    top: 0%;
+  }
+}
+
+@keyframes led-line-horizontal {
+  0% {
+    left: -25%;
+  }
+  50% {
+    left: 100%;
+  }
+  100% {
+    left: -25%;
+  }
+}
+
+.led-border-wrap {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #9f2089 0%, #c72591 100%);
+  border-bottom: 2px solid rgba(225, 42, 154, 0.6);
+}
+
+.led-line-beam-horizontal {
+  position: absolute;
+  bottom: 0;
+  height: 3px;
+  width: 35%;
+  background: linear-gradient(
+    90deg, 
+    transparent 0%, 
+    #ffb6c1 15%, 
+    #ff007f 45%, 
+    #ffffff 70%, 
+    #ff1493 85%, 
+    transparent 100%
+  );
+  box-shadow: 0 0 10px #ff007f, 0 0 18px #ff1493, 0 0 25px #9f2089;
+  animation: led-line-horizontal 2.8s ease-in-out infinite;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.led-line-beam-vertical {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #ff007f 25%,
+    #ffffff 50%,
+    #ff1493 75%,
+    transparent 100%
+  );
+  box-shadow: 0 0 8px #ff007f, 0 0 15px #ff1493;
+  animation: led-line-vertical 2.2s ease-in-out infinite;
+  z-index: 10;
+  pointer-events: none;
+  opacity: 0.75;
+}
+
+.led-border-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+/* Elegant Static Light Border for Cards (Non-distracting Ambient Glow) */
+@keyframes card-ambient-breathe {
+  0%, 100% {
+    box-shadow: 0 4px 14px rgba(225, 42, 154, 0.16);
+  }
+  50% {
+    box-shadow: 0 6px 20px rgba(225, 42, 154, 0.28);
+  }
+}
+
+.card-led-border-wrap {
+  position: relative;
+  border-radius: 1rem;
+  padding: 1.5px;
+  background: linear-gradient(135deg, #f472b6 0%, #e12a9a 50%, #9f2089 100%);
+  animation: card-ambient-breathe 4s ease-in-out infinite;
+  transition: all 0.3s ease;
+}
+
+.card-led-border-wrap:hover {
+  box-shadow: 0 10px 28px rgba(225, 42, 154, 0.38);
+}
+
+.card-led-content {
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(160deg, #fce7f3 0%, #fae8ff 50%, #f3e8ff 100%);
+  border-radius: calc(1rem - 2px);
+  height: 100%;
+  width: 100%;
+}
+
+/* Soft Dim Breathing Light Action Buttons (Pleasing, Non-distracting Jagmag Light) */
+@keyframes button-soft-glow {
+  0%, 100% {
+    box-shadow: 0 2px 6px rgba(159, 32, 137, 0.25);
+    filter: brightness(1);
+  }
+  50% {
+    box-shadow: 0 4px 14px rgba(255, 0, 127, 0.45);
+    filter: brightness(1.12);
+  }
+}
+
+@keyframes button-soft-glow-dark {
+  0%, 100% {
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.25);
+    filter: brightness(1);
+  }
+  50% {
+    box-shadow: 0 4px 14px rgba(56, 189, 248, 0.45);
+    filter: brightness(1.15);
+  }
+}
+
+.btn-rent-sparkle {
+  position: relative;
+  background: linear-gradient(135deg, #9f2089 0%, #b81f9b 50%, #80146f 100%);
+  animation: button-soft-glow 3s ease-in-out infinite;
+  transition: all 0.25s ease;
+}
+
+.btn-rent-sparkle:hover {
+  box-shadow: 0 6px 18px rgba(255, 0, 127, 0.55);
+  transform: translateY(-1px);
+}
+
+.btn-buy-sparkle {
+  position: relative;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #020617 100%);
+  animation: button-soft-glow-dark 3s ease-in-out infinite 0.5s;
+  transition: all 0.25s ease;
+}
+
+.btn-buy-sparkle:hover {
+  box-shadow: 0 6px 18px rgba(56, 189, 248, 0.5);
+  transform: translateY(-1px);
+}
+
+.bgk-button:hover {
+  background: linear-gradient(135deg, #80146f 0%, #a2134a 100%);
+  box-shadow: 0 6px 20px 0 rgba(159, 32, 137, 0.4);
+  transform: translateY(-1px);
+}
+
+.bgk-button:active {
+  transform: translateY(0);
+}
+
+/* Vibrant Badges & Tags */
+.bgk-badge {
+  background-color: #fdf2f8;
+  color: #9f2089;
+  border: 1px solid #fbcfe8;
+}
+
+.discount-badge {
+  background-color: #ecfdf5;
+  color: #059669;
+  border: 1px solid #a7f3d0;
+  font-weight: 800;
+}
+
+/* Light Aesthetic Modern Cards */
+.bgk-card {
+  background-color: #FFFFFF;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.bgk-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.08);
+}
+
+/* Clean Scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* iOS Safe Area & Standalone Display Utilities */
+.pt-safe {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.pl-safe {
+  padding-left: env(safe-area-inset-left, 0px);
+}
+.pr-safe {
+  padding-right: env(safe-area-inset-right, 0px);
+}
+
+/* Prevent accidental iOS Safari zoom on input focus */
+@supports (-webkit-touch-callout: none) {
+  input, textarea, select {
+    font-size: 16px;
+  }
+}
+

@@ -1,0 +1,13 @@
+{
+  "projectId": "bgk-wear",
+  "appId": "1:742797303539:web:d45b14c0232327357ae186",
+  "apiKey": "AIzaSyBO0bwh0-gBwwywg8sOI7jUBzUtVKAPMBg",
+  "authDomain": "bgk-wear.firebaseapp.com",
+  "firestoreDatabaseId": "ai-studio-bgkwear-f6d83077-6dfc-4578-a6d5-7428c3c2a4e6",
+  "storageBucket": "bgk-wear.firebasestorage.app",
+  "messagingSenderId": "742797303539",
+  "measurementId": "",
+  "oAuthClientId": "742797303539-qfpf2kqaltg0lblpgh2c9lqis2gmm4nj.apps.googleusercontent.com",
+  "recaptchaSiteKey": "",
+  "databaseURL": "https://bgk-wear-default-rtdb.firebaseio.com"
+}

@@ -1,0 +1,194 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User profiles for buyers, boutique sellers, and administrators",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth UID", "maxLength": 128 },
+        "fullName": { "type": "string", "description": "Full legal or boutique name", "maxLength": 150 },
+        "email": { "type": "string", "description": "User email address", "maxLength": 150 },
+        "phoneNumber": { "type": "string", "description": "Contact phone number", "maxLength": 30 },
+        "whatsappNumber": { "type": "string", "description": "WhatsApp direct connect number", "maxLength": 30 },
+        "profilePhoto": { "type": "string", "description": "Avatar image URL", "maxLength": 1000 },
+        "city": { "type": "string", "description": "Primary city", "maxLength": 100 },
+        "state": { "type": "string", "description": "Primary state", "maxLength": 100 },
+        "address": { "type": "string", "description": "Full shipping or pickup address", "maxLength": 500 },
+        "bio": { "type": "string", "description": "Bio or boutique description", "maxLength": 1000 },
+        "verified": { "type": "boolean", "description": "Verified seller or renter badge" },
+        "role": { "type": "string", "description": "User role: user, boutique, admin", "maxLength": 50 },
+        "createdAt": { "type": "string", "description": "ISO timestamp of account creation", "maxLength": 60 },
+        "updatedAt": { "type": "string", "description": "ISO timestamp of last update", "maxLength": 60 }
+      },
+      "required": ["uid"]
+    },
+    "Outfit": {
+      "title": "Outfit Product",
+      "description": "Indian ethnic luxury couture outfits available for rental and purchase",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique product ID", "maxLength": 128 },
+        "userId": { "type": "string", "description": "UID of the outfit owner / seller", "maxLength": 128 },
+        "sellerId": { "type": "string", "description": "UID of the outfit seller", "maxLength": 128 },
+        "createdBy": { "type": "string", "description": "UID of creator", "maxLength": 128 },
+        "title": { "type": "string", "description": "Outfit title and name", "maxLength": 300 },
+        "description": { "type": "string", "description": "Detailed description, embroidery, styling notes", "maxLength": 3000 },
+        "category": { "type": "string", "description": "Category from standard fashion categories", "maxLength": 100 },
+        "brand": { "type": "string", "description": "Designer or boutique label", "maxLength": 150 },
+        "size": { "type": "string", "description": "Garment size", "maxLength": 50 },
+        "color": { "type": "string", "description": "Primary color name", "maxLength": 100 },
+        "condition": { "type": "string", "description": "Garment condition rating", "maxLength": 100 },
+        "listingType": { "type": "string", "description": "Listing type: rent, buy, or both", "maxLength": 20 },
+        "rentPricePerDay": { "type": "number", "description": "Daily rental fee in INR" },
+        "salePrice": { "type": "number", "description": "Direct buy price in INR" },
+        "securityDeposit": { "type": "number", "description": "Refundable escrow security deposit" },
+        "originalRetailPrice": { "type": "number", "description": "Original retail price in INR" },
+        "city": { "type": "string", "description": "City location of garment", "maxLength": 100 },
+        "state": { "type": "string", "description": "State location", "maxLength": 100 },
+        "status": { "type": "string", "description": "active, booked, rented, or inactive", "maxLength": 50 },
+        "viewsCount": { "type": "number", "description": "Total view count" },
+        "likesCount": { "type": "number", "description": "Total wishlist / like count" },
+        "createdAt": { "type": "string", "description": "ISO timestamp of listing creation", "maxLength": 60 }
+      },
+      "required": ["userId", "title"]
+    },
+    "RentalOrder": {
+      "title": "Rental Order",
+      "description": "Escrow-backed rental reservations and bookings",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique rental booking ID", "maxLength": 128 },
+        "productId": { "type": "string", "description": "Reference product ID", "maxLength": 128 },
+        "ownerId": { "type": "string", "description": "Seller / Owner UID", "maxLength": 128 },
+        "sellerId": { "type": "string", "description": "Seller UID", "maxLength": 128 },
+        "renterId": { "type": "string", "description": "Renter UID", "maxLength": 128 },
+        "startDate": { "type": "string", "description": "Rental start date", "maxLength": 30 },
+        "endDate": { "type": "string", "description": "Rental end date", "maxLength": 30 },
+        "totalAmount": { "type": "number", "description": "Total rental fee paid" },
+        "securityDeposit": { "type": "number", "description": "Security deposit held in escrow" },
+        "status": { "type": "string", "description": "Order status", "maxLength": 50 },
+        "createdAt": { "type": "string", "description": "ISO timestamp", "maxLength": 60 }
+      },
+      "required": ["productId", "renterId"]
+    },
+    "PurchaseOrder": {
+      "title": "Purchase Order",
+      "description": "Direct outfit purchase orders",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique purchase order ID", "maxLength": 128 },
+        "productId": { "type": "string", "description": "Reference product ID", "maxLength": 128 },
+        "buyerId": { "type": "string", "description": "Buyer UID", "maxLength": 128 },
+        "sellerId": { "type": "string", "description": "Seller UID", "maxLength": 128 },
+        "totalAmount": { "type": "number", "description": "Total purchase price paid" },
+        "status": { "type": "string", "description": "Order status", "maxLength": 50 },
+        "createdAt": { "type": "string", "description": "ISO timestamp", "maxLength": 60 }
+      },
+      "required": ["productId", "buyerId", "sellerId"]
+    },
+    "Wishlist": {
+      "title": "Wishlist Item",
+      "description": "Saved products for user wishlists",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Wishlist entry ID", "maxLength": 128 },
+        "userId": { "type": "string", "description": "User UID", "maxLength": 128 },
+        "productId": { "type": "string", "description": "Saved product ID", "maxLength": 128 },
+        "createdAt": { "type": "string", "description": "ISO timestamp", "maxLength": 60 }
+      },
+      "required": ["userId", "productId"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "Product and seller ratings and reviews",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique review ID", "maxLength": 128 },
+        "productId": { "type": "string", "description": "Reviewed product ID", "maxLength": 128 },
+        "reviewerId": { "type": "string", "description": "Reviewer UID", "maxLength": 128 },
+        "sellerId": { "type": "string", "description": "Seller UID", "maxLength": 128 },
+        "rating": { "type": "number", "description": "Numeric rating 1 to 5" },
+        "review": { "type": "string", "description": "Review commentary", "maxLength": 2000 },
+        "createdAt": { "type": "string", "description": "ISO timestamp", "maxLength": 60 }
+      },
+      "required": ["productId", "reviewerId", "rating"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "User alerts, rental inquiries, approvals and system notices",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique notification ID", "maxLength": 128 },
+        "userId": { "type": "string", "description": "Recipient User UID", "maxLength": 128 },
+        "title": { "type": "string", "description": "Notification title", "maxLength": 200 },
+        "description": { "type": "string", "description": "Notification body", "maxLength": 1000 },
+        "type": { "type": "string", "description": "Notification type", "maxLength": 50 },
+        "read": { "type": "boolean", "description": "Read flag" },
+        "createdAt": { "type": "string", "description": "ISO timestamp", "maxLength": 60 }
+      },
+      "required": ["userId", "title"]
+    },
+    "Chat": {
+      "title": "Chat Thread",
+      "description": "Private direct chat conversation between buyer and seller",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Chat thread ID", "maxLength": 128 },
+        "participants": { "type": "array", "description": "List of participant UIDs (max 10)" },
+        "lastMessage": { "type": "string", "description": "Preview of last message", "maxLength": 500 },
+        "updatedAt": { "type": "string", "description": "ISO timestamp of last message", "maxLength": 60 }
+      },
+      "required": ["participants"]
+    },
+    "ChatMessage": {
+      "title": "Chat Message",
+      "description": "Single message inside a chat thread",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Message ID", "maxLength": 128 },
+        "senderId": { "type": "string", "description": "Sender UID", "maxLength": 128 },
+        "text": { "type": "string", "description": "Message content", "maxLength": 2000 },
+        "createdAt": { "type": "string", "description": "ISO timestamp", "maxLength": 60 }
+      },
+      "required": ["senderId", "text"]
+    }
+  },
+  "firestore": {
+    "/outfits/{outfitId}": {
+      "schema": { "$ref": "#/entities/Outfit" },
+      "description": "Ethnic couture and designer outfits for rent and buy"
+    },
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "Private and public user profile information"
+    },
+    "/wishlist/{wishlistId}": {
+      "schema": { "$ref": "#/entities/Wishlist" },
+      "description": "User saved wishlist items"
+    },
+    "/rentalOrders/{orderId}": {
+      "schema": { "$ref": "#/entities/RentalOrder" },
+      "description": "Escrow rental orders between renter and outfit owner"
+    },
+    "/purchaseOrders/{orderId}": {
+      "schema": { "$ref": "#/entities/PurchaseOrder" },
+      "description": "Direct outfit purchases between buyer and seller"
+    },
+    "/reviews/{reviewId}": {
+      "schema": { "$ref": "#/entities/Review" },
+      "description": "Customer reviews and ratings"
+    },
+    "/notifications/{notifId}": {
+      "schema": { "$ref": "#/entities/Notification" },
+      "description": "Private notifications for users"
+    },
+    "/chats/{chatId}": {
+      "schema": { "$ref": "#/entities/Chat" },
+      "description": "Direct chat conversations"
+    },
+    "/chats/{chatId}/messages/{messageId}": {
+      "schema": { "$ref": "#/entities/ChatMessage" },
+      "description": "Direct messages within a chat conversation"
+    }
+  }
+}

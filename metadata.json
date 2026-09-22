@@ -1,0 +1,6 @@
+{
+  "name": "BGK WEAR",
+  "description": "India's #1 Luxury Designer Wear Marketplace. Rent, buy & sell authentic bridal lehengas, sherwanis, sarees & wedding wear with 0% commission.",
+  "requestFramePermissions": ["camera", "microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

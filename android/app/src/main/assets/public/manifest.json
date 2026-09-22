@@ -1,0 +1,47 @@
+{
+  "id": "/?HomeScreen=true",
+  "name": "BGK WEAR",
+  "short_name": "BGK Wear",
+  "description": "Wear Your Confidence. Premier peer-to-peer fashion marketplace for renting, buying, and listing designer outfits with 0% commission.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#9f2089",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "BGK Wear Home Screen"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "BGK Wear Mobile View"
+    }
+  ],
+  "categories": [
+    "shopping",
+    "lifestyle",
+    "fashion"
+  ]
+}

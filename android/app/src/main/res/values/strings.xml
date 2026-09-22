@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="default_web_client_id">742797303539-qfpf2kqaltg0lblpgh2c9lqis2gmm4nj.apps.googleusercontent.com</string>
+    <string name="app_name">BGK WEAR</string>
+    <string name="title_activity_main">BGK WEAR</string>
+    <string name="package_name">com.bgkwear.app</string>
+    <string name="custom_url_scheme">com.bgkwear.app</string>
+</resources>

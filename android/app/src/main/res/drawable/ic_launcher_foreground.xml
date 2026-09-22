@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Outer Gold Diamond Accent -->
+    <path
+        android:strokeColor="#D4AF37"
+        android:strokeWidth="1.8"
+        android:fillColor="#15D4AF37"
+        android:pathData="M54,22 L86,54 L54,86 L22,54 Z" />
+    
+    <!-- Inner Gold Crown/Facet Design -->
+    <path
+        android:fillColor="#D4AF37"
+        android:pathData="M34,44 L42,66 L54,52 L66,66 L74,44 L66,48 L54,36 L42,48 Z" />
+    
+    <!-- Base Gold Bar -->
+    <path
+        android:fillColor="#F3E5AB"
+        android:pathData="M38,68 L70,68 L67,72 L41,72 Z" />
+</vector>
