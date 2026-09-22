@@ -79,8 +79,11 @@ jobs:
           unzip -q gradle-8.13-bin.zip
           export PATH=$PWD/gradle-8.13/bin:$PATH
           
-          # Create temporary keystore file to satisfy Gradle requirement
-          keytool -genkey -v -keystore app/bgk-release-key.jks -alias bgkwear -keyalg RSA -keysize 2048 -validity 10000 -storepass android -keypass android -dname "CN=Android, OU=Android, O=Android, L=Android, ST=Android, C=US"
+          # Remove existing corrupted keystore if present
+          rm -f app/bgk-release-key.jks
+
+          # Create fresh JKS keystore explicitly using PKCS12 format
+          keytool -genkeypair -v -keystore app/bgk-release-key.jks -storetype PKCS12 -alias bgkwear -keyalg RSA -keysize 2048 -validity 10000 -storepass android -keypass android -dname "CN=Android, OU=Android, O=Android, L=Android, ST=Android, C=US"
 
           # Build AAB Bundle
           gradle bundleRelease --stacktrace
