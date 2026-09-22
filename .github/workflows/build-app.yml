@@ -18,8 +18,8 @@ jobs:
 
       - name: Install Dependencies & Capacitor
         run: |
-          npm install
-          npm install @capacitor/core @capacitor/cli @capacitor/android
+          npm install --force
+          npm install @capacitor/core @capacitor/cli @capacitor/android --force
           npx cap init BjyWear com.bjywear.app --web-dir . || true
           npx cap add android || true
 
@@ -29,14 +29,15 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Build Android App Bundle (AAB)
+      - name: Build Android App Bundle (AAB) with Stacktrace
         run: |
           cd android
           chmod +x gradlew
-          ./gradlew bundleRelease
+          ./gradlew bundleRelease --stacktrace
 
       - name: Upload AAB Artifact
         uses: actions/upload-artifact@v4
         with:
           name: app-release-bundle
           path: android/app/build/outputs/bundle/release/app-release.aab
+        
