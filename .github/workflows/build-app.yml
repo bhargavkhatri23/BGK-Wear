@@ -29,13 +29,10 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Generate Fresh Gradle Wrapper
+      - name: Download Verified Gradle Wrapper Jar
         run: |
-          cd android
-          gradle wrapper --gradle-version 8.4 || true
-
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
+          mkdir -p android/gradle/wrapper
+          curl -L -o android/gradle/wrapper/gradle-wrapper.jar https://raw.githubusercontent.com/gradle/gradle/v8.4.0/subprojects/wrapper/src/main/resources/gradle-wrapper.jar
 
       - name: Build Android App Bundle (AAB)
         run: |
