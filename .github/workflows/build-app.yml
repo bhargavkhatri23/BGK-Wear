@@ -32,11 +32,36 @@ jobs:
           npx cap add android || true
           npx cap sync android
 
-          # splash.png संदर्भ गायब होने की स्थिति में डिफ़ॉल्ट dummy drawable फ़ाइल बनाएँ
+          # AAPT2 एरर देने वाली ख़राब mipmap और drawable फ़ाइलों को साफ़ करें
+          rm -rf android/app/src/main/res/mipmap-*
+          rm -rf android/app/src/main/res/drawable*
+
+          # Android manifest के लिए ज़रूरी न्यूनतम वैलिड रिसोर्स फ़ोल्डर तैयार करें
           mkdir -p android/app/src/main/res/drawable
-          if [ ! -f android/app/src/main/res/drawable/splash.png ]; then
-            echo '<shape xmlns:android="http://schemas.android.com/apk/res/android"><solid android:color="#FFFFFF"/></shape>' > android/app/src/main/res/drawable/splash.xml
-          fi
+          mkdir -p android/app/src/main/res/mipmap-anydpi-v26
+
+          # 1. Valid Dummy Splash Screen XML
+          echo '<shape xmlns:android="http://schemas.android.com/apk/res/android"><solid android:color="#FFFFFF"/></shape>' > android/app/src/main/res/drawable/splash.xml
+
+          # 2. Valid Dummy Launcher Icon XML
+          echo '<shape xmlns:android="http://schemas.android.com/apk/res/android"><solid android:color="#3880FF"/></shape>' > android/app/src/main/res/drawable/ic_launcher_background.xml
+          
+          # Adaptive Icon Config XMLs
+          cat << 'EOF' > android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+          <?xml version="1.0" encoding="utf-8"?>
+          <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+              <background android:drawable="@drawable/ic_launcher_background"/>
+              <foreground android:drawable="@drawable/splash"/>
+          </adaptive-icon>
+          EOF
+
+          cat << 'EOF' > android/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml
+          <?xml version="1.0" encoding="utf-8"?>
+          <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+              <background android:drawable="@drawable/ic_launcher_background"/>
+              <foreground android:drawable="@drawable/splash"/>
+          </adaptive-icon>
+          EOF
 
       - name: Build Android App Bundle
         run: |
