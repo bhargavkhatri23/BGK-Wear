@@ -29,10 +29,8 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Fix Gradle Wrapper Jar
-        run: |
-          mkdir -p android/gradle/wrapper
-          curl -L -o android/gradle/wrapper/gradle-wrapper.jar https://raw.githubusercontent.com/gradle/gradle/v8.4.0/subprojects/wrapper/src/main/resources/gradle-wrapper.jar
+      - name: Setup Official Gradle
+        uses: gradle/actions/setup-gradle@v3
 
       - name: Build Android App Bundle (AAB)
         run: |
