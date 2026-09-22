@@ -73,11 +73,11 @@ jobs:
         run: |
           cd android
           
-          # Fresh gradle setup
+          # Fresh gradle setup (Gradle 8.13)
           mkdir -p gradle/wrapper
-          wget https://services.gradle.org/distributions/gradle-8.11.1-bin.zip
-          unzip -q gradle-8.11.1-bin.zip
-          export PATH=$PWD/gradle-8.11.1/bin:$PATH
+          wget https://services.gradle.org/distributions/gradle-8.13-bin.zip
+          unzip -q gradle-8.13-bin.zip
+          export PATH=$PWD/gradle-8.13/bin:$PATH
           
           # Build Release AAB Bundle
           gradle bundleRelease --stacktrace
