@@ -29,14 +29,14 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Setup Official Gradle
-        uses: gradle/actions/setup-gradle@v3
-
-      - name: Build Android App Bundle (AAB)
+      - name: Build Android App Bundle
         run: |
           cd android
-          chmod +x gradlew
-          ./gradlew bundleRelease --stacktrace
+          rm -rf gradle/wrapper/gradle-wrapper.jar gradle/wrapper/gradle-wrapper.properties
+          wget https://services.gradle.org/distributions/gradle-8.4-bin.zip
+          unzip -q gradle-8.4-bin.zip
+          export PATH=$PWD/gradle-8.4/bin:$PATH
+          gradle bundleRelease --stacktrace
 
       - name: Upload AAB Artifact
         uses: actions/upload-artifact@v4
