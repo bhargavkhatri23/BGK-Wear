@@ -68,11 +68,10 @@ jobs:
           public class MainActivity extends BridgeActivity {}
           EOF
 
-          # REMOVE CORRUPT KEYSTORE OR SIGNING CONFIG CAUSING THE ERROR
-          rm -f android/app/*.jks
-          rm -f android/app/*.keystore
+          # FIX: Remove missing release keystore references from build.gradle to prevent signing errors
+          sed -i '/signingConfig signingConfigs.release/d' android/app/build.gradle || true
 
-      - name: Setup Fresh Gradle Wrapper & Build APK & AAB
+      - name: Setup Fresh Gradle Wrapper & Build APK
         run: |
           cd android          
           mkdir -p gradle/wrapper
@@ -80,8 +79,8 @@ jobs:
           unzip -q gradle-8.13-bin.zip
           export PATH=$PWD/gradle-8.13/bin:$PATH
 
-          # Build Debug APK and Release AAB cleanly
-          gradle assembleDebug bundleRelease --stacktrace
+          # Build only Debug APK cleanly without needing a release keystore
+          gradle assembleDebug --stacktrace
 
           # Rename Debug APK to BGK-WEAR.apk automatically
           cd app/build/outputs/apk/debug/
@@ -92,9 +91,3 @@ jobs:
         with:
           name: BGK-WEAR-APK
           path: android/app/build/outputs/apk/debug/BGK-WEAR.apk
-
-      - name: Upload AAB Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-release-bundle
-          path: android/app/build/outputs/bundle/release/
