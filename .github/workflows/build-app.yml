@@ -68,6 +68,10 @@ jobs:
           public class MainActivity extends BridgeActivity {}
           EOF
 
+          # REMOVE CORRUPT KEYSTORE OR SIGNING CONFIG CAUSING THE ERROR
+          rm -f android/app/*.jks
+          rm -f android/app/*.keystore
+
       - name: Setup Fresh Gradle Wrapper & Build APK & AAB
         run: |
           cd android          
@@ -76,7 +80,7 @@ jobs:
           unzip -q gradle-8.13-bin.zip
           export PATH=$PWD/gradle-8.13/bin:$PATH
 
-          # Build Debug APK and Release AAB
+          # Build Debug APK and Release AAB cleanly
           gradle assembleDebug bundleRelease --stacktrace
 
           # Rename Debug APK to BGK-WEAR.apk automatically
