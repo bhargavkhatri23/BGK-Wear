@@ -1,4 +1,4 @@
-name: Build Android APK & AAB
+name: Build BGK-Wear APK & AAB
 
 on:
   push:
@@ -28,8 +28,7 @@ jobs:
         run: |
           npm install --force
           npm install @capacitor/core @capacitor/cli @capacitor/android --force
-          npx cap init BjyWear com.bgkwear.app --web-dir . || true
-          
+          npx cap init BjyWear com.bgkwear.app --web-dir . || true          
           npx cap add android || true
           npx cap sync android
 
@@ -69,27 +68,26 @@ jobs:
           public class MainActivity extends BridgeActivity {}
           EOF
 
-      - name: Setup Fresh Gradle Wrapper & Build Signed Debug APK & AAB
+      - name: Setup Fresh Gradle Wrapper & Build APK & AAB
         run: |
-          cd android
-          
-          # Fresh gradle setup (Gradle 8.13)
+          cd android          
           mkdir -p gradle/wrapper
           wget https://services.gradle.org/distributions/gradle-8.13-bin.zip
           unzip -q gradle-8.13-bin.zip
           export PATH=$PWD/gradle-8.13/bin:$PATH
 
-          # Remove release signing requirement
-          sed -i '/signingConfig signingConfigs.release/d' app/build.gradle || true
-
-          # Build Signed Debug APK (Phone ke liye) and Release AAB (Play Store ke liye)
+          # Build Debug APK and Release AAB
           gradle assembleDebug bundleRelease --stacktrace
+
+          # Rename Debug APK to BGK-WEAR.apk automatically
+          cd app/build/outputs/apk/debug/
+          mv app-debug.apk BGK-WEAR.apk
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: app-debug-apk
-          path: android/app/build/outputs/apk/debug/
+          name: BGK-WEAR-APK
+          path: android/app/build/outputs/apk/debug/BGK-WEAR.apk
 
       - name: Upload AAB Artifact
         uses: actions/upload-artifact@v4
