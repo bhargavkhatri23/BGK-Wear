@@ -32,20 +32,21 @@ jobs:
           npx cap add android || true
           npx cap sync android
 
-          # Aggressively remove all possible conflicting and corrupted drawable/mipmap files and folders
+          # Clean up conflicting legacy generated folders
           rm -rf android/app/src/main/res/drawable-*
           rm -rf android/app/src/main/res/mipmap-*
-          rm -f android/app/src/main/res/drawable/splash.png
-          rm -f android/app/src/main/res/drawable/splash.xml
 
           # Create clean resource folders
           mkdir -p android/app/src/main/res/drawable
           mkdir -p android/app/src/main/res/mipmap-anydpi-v26
 
-          # Create clean resource files
+          # Create required valid drawable and splash resources (Base64 decoded 1x1 transparent png to satisfy aapt2)
           echo '<shape xmlns:android="http://schemas.android.com/apk/res/android"><solid android:color="#1E1E2E"/></shape>' > android/app/src/main/res/drawable/ic_launcher_background.xml
           echo '<shape xmlns:android="http://schemas.android.com/apk/res/android"><solid android:color="#3880FF"/><corners android:radius="100dp"/></shape>' > android/app/src/main/res/drawable/splash_bg.xml
           
+          # Generate a tiny valid PNG file for splash to satisfy resource reference '@drawable/splash'
+          echo "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" | base64 -d > android/app/src/main/res/drawable/splash.png
+
           cat << 'EOF' > android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
           <?xml version="1.0" encoding="utf-8"?>
           <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
