@@ -69,14 +69,22 @@ jobs:
           public class MainActivity extends BridgeActivity {}
           EOF
 
-      - name: Fix Signing Config & Build
+      - name: Fix Build Gradle & Generate Fresh Keystore
         run: |
           cd android
           
-          # Remove any hardcoded release signing config from build.gradle that causes password mismatch
+          # Fix build.gradle structure cleanly to prevent syntax errors
           if [ -f "app/build.gradle" ]; then
-            sed -i '/signingConfigs {/,/}/d' app/build.gradle
-            sed -i 's/signingConfig signingConfigs.release//g' app/build.gradle
+            python3 -c '
+            with open("app/build.gradle", "r") as f:
+                content = f.read()
+            # Basic cleanup of old signing configs if any
+            import re
+            content = re.sub(r"signingConfigs\s*\{[^}]*\}", "", content)
+            content = re.sub(r"signingConfig\s+signingConfigs\.\w+", "", content)
+            with open("app/build.gradle", "w") as f:
+                f.write(content)
+            '
           fi
 
           # Generate fresh matching keystore
@@ -88,7 +96,7 @@ jobs:
           unzip -q gradle-8.13-bin.zip
           export PATH=$PWD/gradle-8.13/bin:$PATH
 
-          # Build APK and Bundle successfully without signing conflict
+          # Build APK and Bundle successfully
           gradle assembleDebug bundleRelease --stacktrace
 
           # Rename Debug APK for clarity
