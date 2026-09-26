@@ -32,9 +32,11 @@ jobs:
           npx cap add android || true
           npx cap sync android
 
-          # Completely wipe out all auto-generated corrupted resource folders to prevent AAPT compilation failures
+          # Aggressively remove all possible conflicting and corrupted drawable/mipmap files and folders
           rm -rf android/app/src/main/res/drawable-*
           rm -rf android/app/src/main/res/mipmap-*
+          rm -f android/app/src/main/res/drawable/splash.png
+          rm -f android/app/src/main/res/drawable/splash.xml
 
           # Create clean resource folders
           mkdir -p android/app/src/main/res/drawable
