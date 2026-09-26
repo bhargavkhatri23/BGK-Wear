@@ -28,9 +28,26 @@ jobs:
         run: |
           npm install --force
           npm install @capacitor/core @capacitor/cli @capacitor/android --force
-          npx cap init BjyWear com.bgkwear.app --web-dir . || true          
+          
+          # Ensure a valid www folder exists for Capacitor to bundle web assets properly
+          mkdir -p www
+          if [ ! -f "index.html" ] && [ ! -f "www/index.html" ]; then
+            echo '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>BGK Wear</title></head><body style="background:#1E1E2E;color:white;display:flex;justify-content:center;align-items:center;height:100vh;font-family:sans-serif;"><h1>BGK Wear App Working</h1></body></html>' > index.html
+          fi
+          
+          if [ -f "index.html" ] && [ ! -f "www/index.html" ]; then
+            cp index.html www/index.html
+          elif [ -f "www/index.html" ] && [ ! -f "index.html" ]; then
+            cp www/index.html index.html
+          fi
+
+          npx cap init BjyWear com.bgkwear.app --web-dir www || true          
           npx cap add android || true
+          
+          # Force copy web assets into Android project assets folder to prevent crash on open
           npx cap sync android
+          mkdir -p android/app/src/main/assets/public
+          cp -rf www/* android/app/src/main/assets/public/ || true
 
           # Clean up conflicting legacy generated folders
           rm -rf android/app/src/main/res/drawable-*
@@ -40,11 +57,11 @@ jobs:
           mkdir -p android/app/src/main/res/drawable
           mkdir -p android/app/src/main/res/mipmap-anydpi-v26
 
-          # Create required valid drawable and splash resources (Base64 decoded 1x1 transparent png to satisfy aapt2)
+          # Create required valid drawable and splash resources
           echo '<shape xmlns:android="http://schemas.android.com/apk/res/android"><solid android:color="#1E1E2E"/></shape>' > android/app/src/main/res/drawable/ic_launcher_background.xml
           echo '<shape xmlns:android="http://schemas.android.com/apk/res/android"><solid android:color="#3880FF"/><corners android:radius="100dp"/></shape>' > android/app/src/main/res/drawable/splash_bg.xml
           
-          # Generate a tiny valid PNG file for splash to satisfy resource reference '@drawable/splash'
+          # Generate tiny valid PNG file for splash
           echo "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" | base64 -d > android/app/src/main/res/drawable/splash.png
 
           cat << 'EOF' > android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
