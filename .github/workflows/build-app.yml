@@ -32,21 +32,15 @@ jobs:
           npx cap add android || true
           npx cap sync android
 
-          # Setup proper App Launcher Icon and Splash for Android
+          # Completely wipe out all auto-generated corrupted resource folders to prevent AAPT compilation failures
+          rm -rf android/app/src/main/res/drawable-*
+          rm -rf android/app/src/main/res/mipmap-*
+
+          # Create clean resource folders
           mkdir -p android/app/src/main/res/drawable
           mkdir -p android/app/src/main/res/mipmap-anydpi-v26
 
-          # Remove conflicting and old png/xml resource files completely to prevent merge failure
-          rm -f android/app/src/main/res/drawable/splash.png
-          rm -f android/app/src/main/res/drawable/splash.xml
-          rm -rf android/app/src/main/res/mipmap-mdpi/
-          rm -rf android/app/src/main/res/mipmap-hdpi/
-          rm -rf android/app/src/main/res/mipmap-xhdpi/
-          rm -rf android/app/src/main/res/mipmap-xxhdpi/
-          rm -rf android/app/src/main/res/mipmap-xxxhdpi/
-
           # Create clean resource files
-          mkdir -p android/app/src/main/res/mipmap-anydpi-v26
           echo '<shape xmlns:android="http://schemas.android.com/apk/res/android"><solid android:color="#1E1E2E"/></shape>' > android/app/src/main/res/drawable/ic_launcher_background.xml
           echo '<shape xmlns:android="http://schemas.android.com/apk/res/android"><solid android:color="#3880FF"/><corners android:radius="100dp"/></shape>' > android/app/src/main/res/drawable/splash_bg.xml
           
@@ -91,7 +85,6 @@ jobs:
           with open(gradle_path, "r") as f:
               lines = f.readlines()
 
-          # Filter out any existing signingConfigs or buildTypes blocks line by line safely
           clean_lines = []
           skip = False
           brace_depth = 0
@@ -115,7 +108,6 @@ jobs:
 
           content = "".join(clean_lines)
 
-          # New block to be injected inside android { ... }
           injection = """
           
               signingConfigs {
@@ -139,7 +131,6 @@ jobs:
               }
           """
 
-          # Find the exact position right after 'android {'
           match = re.search(r'android\s*\{', content)
           if match:
               idx = match.end()
