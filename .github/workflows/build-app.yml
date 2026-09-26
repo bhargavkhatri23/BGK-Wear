@@ -73,38 +73,75 @@ jobs:
         run: |
           cd android
           
-          # Create a robust python script to clean up build.gradle and fix any broken brackets
+          # Generate fresh matching keystore first
+          rm -f app/bgk-release-key.jks
+          keytool -genkey -v -keystore app/bgk-release-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias bgkwear -storepass android123 -keypass android123 -dname "CN=BGK, OU=Wear, O=App, L=City, ST=State, C=IN"
+
+          # Completely rewrite build.gradle safely using Python to avoid any brace mismatch
           cat << 'EOF' > fix.py
           import re
 
-          try:
-              with open("app/build.gradle", "r") as f:
-                  content = f.read()
+          gradle_path = "app/build.gradle"
+          with open(gradle_path, "r") as f:
+              lines = f.readlines()
 
-              # Remove any existing signingConfigs block completely
-              content = re.sub(r"signingConfigs\s*\{[^}]*\}", "", content, flags=re.DOTALL)
-              content = re.sub(r"signingConfig\s+signingConfigs\.\w+", "", content)
+          new_lines = []
+          skip_block = False
+          brace_count = 0
 
-              # Ensure buildTypes is clean and valid
-              if "buildTypes" not in content:
-                  # Append a standard buildTypes if missing
-                  android_block_match = re.search(r"android\s*\{", content)
-                  if android_block_match:
-                      idx = android_block_match.end()
-                      content = content[:idx] + "\n    buildTypes {\n        release {\n            minifyEnabled false\n            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'\n        }\n    }\n" + content[idx:]
+          # Filter out old buildTypes and signingConfigs to prevent duplication or syntax corruption
+          for line in lines:
+              stripped = line.strip()
+              if stripped.startswith("signingConfigs") or stripped.startswith("buildTypes"):
+                  skip_block = True
+                  brace_count = line.count("{") - line.count("}")
+                  if brace_count == 0:
+                      skip_block = False
+                  continue
+              
+              if skip_block:
+                  brace_count += line.count("{") - line.count("}")
+                  if brace_count <= 0:
+                      skip_block = False
+                  continue
+              
+              new_lines.append(line)
 
-              with open("app/build.gradle", "w") as f:
-                  f.write(content)
-              print("Successfully patched app/build.gradle")
-          except Exception as e:
-              print("Error patching gradle:", e)
+          content = "".join(new_lines)
+
+          # Inject proper signingConfigs and buildTypes right before the last closing brace of 'android { ... }'
+          injection = """
+              signingConfigs {
+                  release {
+                      storeFile file('bgk-release-key.jks')
+                      storePassword 'android123'
+                      keyAlias 'bgkwear'
+                      keyPassword 'android123'
+                  }
+              }
+              buildTypes {
+                  release {
+                      signingConfig signingConfigs.release
+                      minifyEnabled false
+                      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+                  }
+                  debug {
+                      signingConfig signingConfigs.release
+                  }
+              }
+          """
+
+          # Find the android block closing brace and insert before it
+          last_brace_idx = content.rfind("}")
+          if last_brace_idx != -1:
+              content = content[:last_brace_idx] + injection + "\n" + content[last_brace_idx:]
+
+          with open(gradle_path, "w") as f:
+              f.write(content)
+          print("Successfully regenerated clean build.gradle")
           EOF
 
           python3 fix.py
-
-          # Generate fresh matching keystore
-          rm -f app/bgk-release-key.jks
-          keytool -genkey -v -keystore app/bgk-release-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias bgkwear -storepass android123 -keypass android123 -dname "CN=BGK, OU=Wear, O=App, L=City, ST=State, C=IN"
 
           mkdir -p gradle/wrapper
           wget https://services.gradle.org/distributions/gradle-8.13-bin.zip
