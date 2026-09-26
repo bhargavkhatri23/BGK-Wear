@@ -73,19 +73,21 @@ jobs:
         run: |
           cd android
           
-          # Fix build.gradle structure cleanly to prevent syntax errors
-          if [ -f "app/build.gradle" ]; then
-            python3 -c '
-            with open("app/build.gradle", "r") as f:
-                content = f.read()
-            # Basic cleanup of old signing configs if any
-            import re
-            content = re.sub(r"signingConfigs\s*\{[^}]*\}", "", content)
-            content = re.sub(r"signingConfig\s+signingConfigs\.\w+", "", content)
-            with open("app/build.gradle", "w") as f:
-                f.write(content)
-            '
-          fi
+          # Create a clean python script to safely modify build.gradle without indentation issues
+          cat << 'EOF' > fix.py
+          import re
+          try:
+              with open("app/build.gradle", "r") as f:
+                  content = f.read()
+              content = re.sub(r"signingConfigs\s*\{[^}]*\}", "", content)
+              content = re.sub(r"signingConfig\s+signingConfigs\.\w+", "", content)
+              with open("app/build.gradle", "w") as f:
+                  f.write(content)
+          except Exception as e:
+              print("Skipping gradle patch:", e)
+          EOF
+
+          python3 fix.py
 
           # Generate fresh matching keystore
           rm -f app/bgk-release-key.jks
