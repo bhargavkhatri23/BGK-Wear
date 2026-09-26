@@ -36,11 +36,17 @@ jobs:
           mkdir -p android/app/src/main/res/drawable
           mkdir -p android/app/src/main/res/mipmap-anydpi-v26
 
-          # Remove conflicting resource files to prevent merge failure
+          # Remove conflicting and old png/xml resource files completely to prevent merge failure
           rm -f android/app/src/main/res/drawable/splash.png
           rm -f android/app/src/main/res/drawable/splash.xml
+          rm -rf android/app/src/main/res/mipmap-mdpi/
+          rm -rf android/app/src/main/res/mipmap-hdpi/
+          rm -rf android/app/src/main/res/mipmap-xhdpi/
+          rm -rf android/app/src/main/res/mipmap-xxhdpi/
+          rm -rf android/app/src/main/res/mipmap-xxxhdpi/
 
           # Create clean resource files
+          mkdir -p android/app/src/main/res/mipmap-anydpi-v26
           echo '<shape xmlns:android="http://schemas.android.com/apk/res/android"><solid android:color="#1E1E2E"/></shape>' > android/app/src/main/res/drawable/ic_launcher_background.xml
           echo '<shape xmlns:android="http://schemas.android.com/apk/res/android"><solid android:color="#3880FF"/><corners android:radius="100dp"/></shape>' > android/app/src/main/res/drawable/splash_bg.xml
           
