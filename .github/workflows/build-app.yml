@@ -36,7 +36,7 @@ jobs:
           mkdir -p android/app/src/main/res/drawable
           mkdir -p android/app/src/main/res/mipmap-anydpi-v26
 
-          # Remove conflicting / duplicate resource files to prevent merge failure
+          # Remove conflicting resource files to prevent merge failure
           rm -f android/app/src/main/res/drawable/splash.png
           rm -f android/app/src/main/res/drawable/splash.xml
 
@@ -73,18 +73,31 @@ jobs:
         run: |
           cd android
           
-          # Create a clean python script to safely modify build.gradle without indentation issues
+          # Create a robust python script to clean up build.gradle and fix any broken brackets
           cat << 'EOF' > fix.py
           import re
+
           try:
               with open("app/build.gradle", "r") as f:
                   content = f.read()
-              content = re.sub(r"signingConfigs\s*\{[^}]*\}", "", content)
+
+              # Remove any existing signingConfigs block completely
+              content = re.sub(r"signingConfigs\s*\{[^}]*\}", "", content, flags=re.DOTALL)
               content = re.sub(r"signingConfig\s+signingConfigs\.\w+", "", content)
+
+              # Ensure buildTypes is clean and valid
+              if "buildTypes" not in content:
+                  # Append a standard buildTypes if missing
+                  android_block_match = re.search(r"android\s*\{", content)
+                  if android_block_match:
+                      idx = android_block_match.end()
+                      content = content[:idx] + "\n    buildTypes {\n        release {\n            minifyEnabled false\n            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'\n        }\n    }\n" + content[idx:]
+
               with open("app/build.gradle", "w") as f:
                   f.write(content)
+              print("Successfully patched app/build.gradle")
           except Exception as e:
-              print("Skipping gradle patch:", e)
+              print("Error patching gradle:", e)
           EOF
 
           python3 fix.py
