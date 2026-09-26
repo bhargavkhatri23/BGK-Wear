@@ -77,20 +77,41 @@ jobs:
           rm -f app/bgk-release-key.jks
           keytool -genkey -v -keystore app/bgk-release-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias bgkwear -storepass android123 -keypass android123 -dname "CN=BGK, OU=Wear, O=App, L=City, ST=State, C=IN"
 
-          # Properly inject signingConfigs and buildTypes inside the 'android { ... }' block using Python
+          # Bulletproof Python script to clean and correctly structure build.gradle
           cat << 'EOF' > fix.py
           import re
 
           gradle_path = "app/build.gradle"
           with open(gradle_path, "r") as f:
-              content = f.read()
+              lines = f.readlines()
 
-          # Remove existing buildTypes or signingConfigs to avoid conflicts
-          content = re.sub(r'signingConfigs\s*\{[^}]*(\{[^}]*\}[^}]*)*\}', '', content)
-          content = re.sub(r'buildTypes\s*\{[^}]*(\{[^}]*\}[^}]*)*\}', '', content)
+          # Filter out any existing signingConfigs or buildTypes blocks line by line safely
+          clean_lines = []
+          skip = False
+          brace_depth = 0
 
-          # Define what needs to be inserted inside android { ... }
+          for line in lines:
+              stripped = line.strip()
+              if not skip and (stripped.startswith("signingConfigs") or stripped.startswith("buildTypes")):
+                  skip = True
+                  brace_depth = line.count("{") - line.count("}")
+                  if brace_depth <= 0:
+                      skip = False
+                  continue
+              
+              if skip:
+                  brace_depth += line.count("{") - line.count("}")
+                  if brace_depth <= 0:
+                      skip = False
+                  continue
+              
+              clean_lines.append(line)
+
+          content = "".join(clean_lines)
+
+          # New block to be injected inside android { ... }
           injection = """
+          
               signingConfigs {
                   release {
                       storeFile file('bgk-release-key.jks')
@@ -99,6 +120,7 @@ jobs:
                       keyPassword 'android123'
                   }
               }
+
               buildTypes {
                   release {
                       signingConfig signingConfigs.release
@@ -111,17 +133,17 @@ jobs:
               }
           """
 
-          # Find 'android {' and insert the configuration right after it
+          # Find the exact position right after 'android {'
           match = re.search(r'android\s*\{', content)
           if match:
-              insert_pos = match.end()
-              content = content[:insert_pos] + "\n" + injection + "\n" + content[insert_pos:]
+              idx = match.end()
+              content = content[:idx] + injection + content[idx:]
           else:
               raise Exception("Could not find 'android {' block in build.gradle")
 
           with open(gradle_path, "w") as f:
               f.write(content)
-          print("Successfully injected signingConfigs and buildTypes inside android block")
+          print("Successfully fixed and structured build.gradle")
           EOF
 
           python3 fix.py
