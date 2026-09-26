@@ -35,21 +35,20 @@ jobs:
           # Setup proper App Launcher Icon and Splash for Android
           mkdir -p android/app/src/main/res/drawable
           mkdir -p android/app/src/main/res/mipmap-anydpi-v26
-          mkdir -p android/app/src/main/res/mipmap-hdpi
-          mkdir -p android/app/src/main/res/mipmap-mdpi
-          mkdir -p android/app/src/main/res/mipmap-xhdpi
-          mkdir -p android/app/src/main/res/xxhdpi
-          mkdir -p android/app/src/main/res/mipmap-xxxhdpi
 
-          # Create custom adaptive icon background and foreground
+          # Remove conflicting / duplicate resource files to prevent merge failure
+          rm -f android/app/src/main/res/drawable/splash.png
+          rm -f android/app/src/main/res/drawable/splash.xml
+
+          # Create clean resource files
           echo '<shape xmlns:android="http://schemas.android.com/apk/res/android"><solid android:color="#1E1E2E"/></shape>' > android/app/src/main/res/drawable/ic_launcher_background.xml
-          echo '<shape xmlns:android="http://schemas.android.com/apk/res/android"><solid android:color="#3880FF"/><corners android:radius="100dp"/></shape>' > android/app/src/main/res/drawable/splash.xml
+          echo '<shape xmlns:android="http://schemas.android.com/apk/res/android"><solid android:color="#3880FF"/><corners android:radius="100dp"/></shape>' > android/app/src/main/res/drawable/splash_bg.xml
           
           cat << 'EOF' > android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
           <?xml version="1.0" encoding="utf-8"?>
           <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
               <background android:drawable="@drawable/ic_launcher_background"/>
-              <foreground android:drawable="@drawable/splash"/>
+              <foreground android:drawable="@drawable/splash_bg"/>
           </adaptive-icon>
           EOF
 
@@ -57,7 +56,7 @@ jobs:
           <?xml version="1.0" encoding="utf-8"?>
           <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
               <background android:drawable="@drawable/ic_launcher_background"/>
-              <foreground android:drawable="@drawable/splash"/>
+              <foreground android:drawable="@drawable/splash_bg"/>
           </adaptive-icon>
           EOF
 
