@@ -1,4 +1,4 @@
-name: Build BGK-Wear APK & AAB
+name: Build BGK-Wear APK & Play Store AAB
 
 on:
   push:
@@ -32,16 +32,18 @@ jobs:
           npx cap add android || true
           npx cap sync android
 
-          # Clean resources
-          rm -rf android/app/src/main/res/mipmap-*
-          rm -rf android/app/src/main/res/drawable*
-
+          # Setup proper App Launcher Icon and Splash for Android
           mkdir -p android/app/src/main/res/drawable
           mkdir -p android/app/src/main/res/mipmap-anydpi-v26
+          mkdir -p android/app/src/main/res/mipmap-hdpi
+          mkdir -p android/app/src/main/res/mipmap-mdpi
+          mkdir -p android/app/src/main/res/mipmap-xhdpi
+          mkdir -p android/app/src/main/res/xxhdpi
+          mkdir -p android/app/src/main/res/mipmap-xxxhdpi
 
-          # Create basic XML resources
-          echo '<shape xmlns:android="http://schemas.android.com/apk/res/android"><solid android:color="#FFFFFF"/></shape>' > android/app/src/main/res/drawable/splash.xml
-          echo '<shape xmlns:android="http://schemas.android.com/apk/res/android"><solid android:color="#3880FF"/></shape>' > android/app/src/main/res/drawable/ic_launcher_background.xml
+          # Create custom adaptive icon background and foreground
+          echo '<shape xmlns:android="http://schemas.android.com/apk/res/android"><solid android:color="#1E1E2E"/></shape>' > android/app/src/main/res/drawable/ic_launcher_background.xml
+          echo '<shape xmlns:android="http://schemas.android.com/apk/res/android"><solid android:color="#3880FF"/><corners android:radius="100dp"/></shape>' > android/app/src/main/res/drawable/splash.xml
           
           cat << 'EOF' > android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
           <?xml version="1.0" encoding="utf-8"?>
@@ -68,10 +70,7 @@ jobs:
           public class MainActivity extends BridgeActivity {}
           EOF
 
-          # FIX: Remove missing release keystore references from build.gradle to prevent signing errors
-          sed -i '/signingConfig signingConfigs.release/d' android/app/build.gradle || true
-
-      - name: Setup Fresh Gradle Wrapper & Build APK
+      - name: Setup Fresh Gradle Wrapper & Build APK and AAB
         run: |
           cd android          
           mkdir -p gradle/wrapper
@@ -79,15 +78,21 @@ jobs:
           unzip -q gradle-8.13-bin.zip
           export PATH=$PWD/gradle-8.13/bin:$PATH
 
-          # Build only Debug APK cleanly without needing a release keystore
-          gradle assembleDebug --stacktrace
+          # Build both Debug APK (for testing) and Release Bundle (for Play Store)
+          gradle assembleDebug bundleRelease --stacktrace
 
-          # Rename Debug APK to BGK-WEAR.apk automatically
+          # Rename Debug APK for clarity
           cd app/build/outputs/apk/debug/
           mv app-debug.apk BGK-WEAR.apk
 
-      - name: Upload APK Artifact
+      - name: Upload APK Artifact (For Phone Testing)
         uses: actions/upload-artifact@v4
         with:
           name: BGK-WEAR-APK
           path: android/app/build/outputs/apk/debug/BGK-WEAR.apk
+
+      - name: Upload AAB Artifact (For Play Store Upload)
+        uses: actions/upload-artifact@v4
+        with:
+          name: BGK-WEAR-Release-Bundle
+          path: android/app/build/outputs/bundle/release/app-release.aab
